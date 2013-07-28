@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from __future__ import division
+
+import bisect
 import gzip
 import hashlib
 import math
@@ -8,7 +11,7 @@ import re
 import sys
 
 INPUT_BITS = 160
-WORDS_DESIRED = 11.
+WORDS_DESIRED = 11
 WORDS_NEEDED = math.ceil(2 ** (INPUT_BITS / WORDS_DESIRED))
 WORDS_PATH = 'data/dict-%d.txt.gz' % (WORDS_NEEDED,)
 
@@ -33,27 +36,24 @@ def make_word_list():
 
 
 def encode(words, h):
-    hbits = INPUT_BITS
-    per_word = math.floor(INPUT_BITS / WORDS_DESIRED)
     output = []
-    n = 0
-    bc = 0
-
-    while hbits:
-        n <<= 1
-        n |= h & 1
-        h >>= 1
-        hbits -= 1
-        bc += 1
-        if bc == per_word:
-            output.append(words[n])
-            bc = 0
-            n = 0
-
-    if bc:
-        output.append(words[n])
-
+    while h:
+        h, idx = divmod(h, len(words))
+        output.append(words[idx])
     return output
+
+
+def indexOf(words, word):
+    idx = bisect.bisect_left(words, word)
+    assert words[idx] == word
+    return idx
+
+
+def decode(words, code):
+    h = 0
+    for word in reversed(code):
+        h = (h * len(words)) + indexOf(words, word)
+    return h
 
 
 def main():
@@ -76,6 +76,14 @@ def main():
         print
         print s, '=', ' '.join(encode(words, h))
         print
+
+    elif sys.argv[1] == 'decode':
+        h = decode(words, sys.argv[2:])
+        s = '%x' % h
+        print
+        print s, '=', ' '.join(sys.argv[2:])
+        print
+
 
 if __name__ == '__main__':
     main()
