@@ -31,6 +31,7 @@ def make_word_list():
             if len(words) == WORDS_NEEDED:
                 break
 
+    assert len(words) == WORDS_NEEDED
     words.sort()
     return words
 
