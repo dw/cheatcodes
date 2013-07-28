@@ -76,7 +76,7 @@ href="http://invokeit.wordpress.com/frequency-word-lists/">Invoke IT weblog</a>.
 
 * Ideally the scheme would be future-proofed using some *selector bits* too.
   For example, addition of 3 bits to the message would allow disambiguating a
-  BitTorrent link from FreeNet link, with enough space left to add 5 new link
+  BitTorrent link from a FreeNet link, with enough space left to add 6 new link
   types in the future.
 
 * Alternatively, selectors and versioning could be implemented by restricting
