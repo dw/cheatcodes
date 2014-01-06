@@ -123,3 +123,7 @@ A *directory of channels* might work simiarly, where anyone observing some
 channels can publish their history and hashes for the most recent publication.
 This would allow 11 words to represent a curated list, e.g. a person's
 favourite SciFi TV shows.
+
+
+
+Note: see http://tools.ietf.org/html/rfc1751 for another implementation
